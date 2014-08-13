@@ -1,0 +1,163 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "MARCspec object schema",
+    "type": "object",
+    "required": ["field"],
+    "properties": {
+        "field": {
+            "$ref": "#/definitions/field",
+            "properties": {
+                "subSpecs": {
+                    "type": "array",
+                    "items": {"$ref": "#/definitions/subSpec"}
+                }
+            },
+            "additionalProperties": false
+        },
+        "subfields": {
+            "type": "array",
+            "items": [
+                {
+                    "$ref": "#/definitions/subfield",
+                    "properties": {
+                        "subSpecs": {
+                            "type": "array",
+                            "items": {"$ref": "#/definitions/subSpec"}
+                        }
+                    }
+                }
+            ]
+        }
+    },
+    "definitions": {
+        "field": {
+            "type":"object",
+            "required": ["tag"],
+            "properties": {
+                "tag": {
+                    "type":"string",
+                    "pattern": "^([.a-z0-9]{3,3}|[.A-Z0-9]{3,3})$"
+                },
+                "indexStart": {"$ref": "#/definitions/indexStart"},
+                "indexEnd": {"$ref": "#/definitions/indexEnd"}
+            },
+            "oneOf": [
+                { "$ref": "#/definitions/fixedField" },
+                { "$ref": "#/definitions/dataField" }
+            ]
+        },
+        "fixedField": {
+            "properties": {
+                "charStart": {"$ref": "#/definitions/charStart"},
+                "charEnd": {"$ref": "#/definitions/charEnd"},
+                "charLength": {"$ref": "#/definitions/charLength"}
+            },
+            "dependencies": {
+                "charEnd": ["charStart"],
+                "charLength": ["charStart"]
+            },
+            "anyOf": [
+                {"required": ["charStart"]},
+                {"required": ["charEnd"]}
+            ]
+        },
+        "dataField": {
+            "properties": {
+                "indicator1": {"$ref": "#/definitions/indicator1"},
+                "indicator2": {"$ref": "#/definitions/indicator2"}
+            },
+            "anyOf": [
+                {"required": ["indicator1"]},
+                {"required": ["indicator2"]}
+            ]
+        },
+        "charStart": {
+            "type": ["number","string"],
+            "pattern": "^(?:[0-9]*|#)"
+        },
+        "charEnd": {
+            "type": ["number","string"],
+            "pattern": "^(?:[0-9]*|#)"
+        },
+        "charLength": {
+            "type": "number",
+            "pattern": "[0-9]*"
+        },
+        "indicator1": {
+            "type": "string",
+            "pattern": "^[a-z0-9]"
+        },
+        "indicator2": {
+            "type": "string",
+            "pattern": "^[a-z0-9]"
+        },
+        "indexStart": {
+            "type": "number",
+            "pattern": "[0-9]*"
+        },
+        "indexEnd": {
+            "type": "number",
+            "pattern": "[0-9]*"
+        },
+        "subfields": {
+            "type": "array",
+            "items": {"$ref": "#/definitions/subfield"}
+        },
+        "subfield": {
+            "type": "object",
+            "required": ["tag"],
+            "properties": {
+                "tag": {
+                    "type": "string",
+                    "pattern": "^[!-?[-{}-~]$"
+                },
+                "charStart": {"$ref": "#/definitions/charStart"},
+                "charEnd": {"$ref": "#/definitions/charEnd"},
+                "charLength": {"$ref": "#/definitions/charLength"},
+                "indexStart": {"$ref": "#/definitions/indexStart"},
+                "indexEnd": {"$ref": "#/definitions/indexEnd"}
+            }
+        },
+        "subSpec": {
+            "type": "object",
+            "properties": {
+                "leftSubTerm": {"$ref": "#/definitions/subTerm"},
+                "rightSubTerm": {"$ref": "#/definitions/subTerm"},
+                "operator": {"$ref": "#/definitions/operator"}
+            },
+            "required": ["leftSubTerm","rightSubTerm","operator"],
+            "additionalProperties": false
+        },
+        "operator": {
+            "type": "string",
+            "enum": ["=","!=","~","!~","!","?"]
+        },
+        "subTerm": {
+            "anyOf": [
+                {
+                    "properties": {
+                        "field": {
+                            "$ref": "#/definitions/field"
+                        },
+                        "subfields": {
+                            "type": "array",
+                            "items": [ 
+                                {
+                                    "$ref": "#/definitions/subfield"
+                                }
+                            ]
+                        }
+                    },
+                    "additionalProperties": false
+                },
+                {
+                    "properties": {
+                        "comparisonString": {"type": "string"}
+                    },
+                    "additionalProperties": false
+                }
+            ]
+        }
+    },
+    "additionalProperties": false
+}
