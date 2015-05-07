@@ -60,6 +60,9 @@
         "indexEnd": {
           "$ref": "#/definitions/indexEnd"
         },
+        "indexLength": {
+          "$ref": "#/definitions/indexLength"
+        },
         "charStart": {
           "$ref": "#/definitions/charStart"
         },
@@ -71,6 +74,12 @@
         }
       },
       "dependencies": {
+        "indexEnd": [
+          "indexStart"
+        ],
+        "indexLength": [
+          "indexStart"
+        ],
         "charEnd": [
           "charStart"
         ],
@@ -103,12 +112,23 @@
         "indexEnd": {
           "$ref": "#/definitions/indexEnd"
         },
+        "indexLength": {
+          "$ref": "#/definitions/indexLength"
+        },
         "indicator1": {
           "$ref": "#/definitions/indicator1"
         },
         "indicator2": {
           "$ref": "#/definitions/indicator2"
         }
+      },
+      "dependencies": {
+        "indexEnd": [
+          "indexStart"
+        ],
+        "indexLength": [
+          "indexStart"
+        ]
       },
       "anyOf": [
         {
@@ -144,7 +164,7 @@
     },
     "charLength": {
       "type": "number",
-      "pattern": "[0-9]*"
+      "pattern": "[1-9][0-9]*"
     },
     "indicator1": {
       "type": "string",
@@ -161,6 +181,10 @@
     "indexEnd": {
       "type": "number",
       "pattern": "[0-9]*"
+    },
+    "indexLength": {
+      "type": "number",
+      "pattern": "[1-9][0-9]*"
     },
     "subfields": {
       "type": "array",
