@@ -38,7 +38,8 @@
     "field": {
       "type": "object",
       "required": [
-        "tag"
+        "tag",
+        "indexStart"
       ],
       "oneOf": [
         {
@@ -55,22 +56,22 @@
           "$ref": "#/definitions/tag"
         },
         "indexStart": {
-          "$ref": "#/definitions/indexStart"
+          "$ref": "#/definitions/position"
         },
         "indexEnd": {
-          "$ref": "#/definitions/indexEnd"
+          "$ref": "#/definitions/position"
         },
         "indexLength": {
-          "$ref": "#/definitions/indexLength"
+          "$ref": "#/definitions/length"
         },
         "charStart": {
-          "$ref": "#/definitions/charStart"
+          "$ref": "#/definitions/position"
         },
         "charEnd": {
-          "$ref": "#/definitions/charEnd"
+          "$ref": "#/definitions/position"
         },
         "charLength": {
-          "$ref": "#/definitions/charLength"
+          "$ref": "#/definitions/length"
         }
       },
       "dependencies": {
@@ -107,13 +108,13 @@
           "$ref": "#/definitions/tag"
         },
         "indexStart": {
-          "$ref": "#/definitions/indexStart"
+          "$ref": "#/definitions/position"
         },
         "indexEnd": {
-          "$ref": "#/definitions/indexEnd"
+          "$ref": "#/definitions/position"
         },
         "indexLength": {
-          "$ref": "#/definitions/indexLength"
+          "$ref": "#/definitions/length"
         },
         "indicator1": {
           "$ref": "#/definitions/indicator1"
@@ -148,21 +149,14 @@
       "type": "string",
       "pattern": "^([.a-z0-9]{3,3}|[.A-Z0-9]{3,3})$"
     },
-    "charStart": {
+    "position": {
       "type": [
         "number",
         "string"
       ],
-      "pattern": "^(?:[0-9]*|#)"
+      "pattern": "^(?:[0-9]*|#)$"
     },
-    "charEnd": {
-      "type": [
-        "number",
-        "string"
-      ],
-      "pattern": "^(?:[0-9]*|#)"
-    },
-    "charLength": {
+    "length": {
       "type": "number",
       "pattern": "[1-9][0-9]*"
     },
@@ -174,18 +168,6 @@
       "type": "string",
       "pattern": "^[a-z0-9]"
     },
-    "indexStart": {
-      "type": "number",
-      "pattern": "[0-9]*"
-    },
-    "indexEnd": {
-      "type": "number",
-      "pattern": "[0-9]*"
-    },
-    "indexLength": {
-      "type": "number",
-      "pattern": "[1-9][0-9]*"
-    },
     "subfields": {
       "type": "array",
       "items": {
@@ -195,7 +177,8 @@
     "subfield": {
       "type": "object",
       "required": [
-        "tag"
+        "tag",
+        "indexStart"
       ],
       "properties": {
         "tag": {
@@ -203,19 +186,19 @@
           "pattern": "^[!-?[-{}-~]$"
         },
         "charStart": {
-          "$ref": "#/definitions/charStart"
+          "$ref": "#/definitions/position"
         },
         "charEnd": {
-          "$ref": "#/definitions/charEnd"
+          "$ref": "#/definitions/position"
         },
         "charLength": {
-          "$ref": "#/definitions/charLength"
+          "$ref": "#/definitions/length"
         },
         "indexStart": {
-          "$ref": "#/definitions/indexStart"
+          "$ref": "#/definitions/position"
         },
         "indexEnd": {
-          "$ref": "#/definitions/indexEnd"
+          "$ref": "#/definitions/position"
         }
       }
     },
