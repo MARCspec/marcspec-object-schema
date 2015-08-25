@@ -39,7 +39,8 @@
       "type": "object",
       "required": [
         "tag",
-        "indexStart"
+        "indexStart",
+        "indexEnd"
       ],
       "oneOf": [
         {
@@ -178,7 +179,8 @@
       "type": "object",
       "required": [
         "tag",
-        "indexStart"
+        "indexStart",
+        "indexEnd"
       ],
       "properties": {
         "tag": {
