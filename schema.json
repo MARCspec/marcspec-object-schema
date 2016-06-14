@@ -150,6 +150,10 @@
       "type": "string",
       "pattern": "^([.a-z0-9]{3,3}|[.A-Z0-9]{3,3})$"
     },
+    "code": {
+      "type": "string",
+      "pattern": "^[!-?[-{}-~]$"
+    },
     "position": {
       "type": [
         "number",
@@ -178,15 +182,28 @@
     "subfield": {
       "type": "object",
       "required": [
-        "tag",
+        {
+        "oneOf": [
+            "tag",
+            "code"
+        ]
+        },
         "indexStart",
         "indexEnd"
       ],
       "properties": {
-        "tag": {
-          "type": "string",
-          "pattern": "^[!-?[-{}-~]$"
-        },
+        "oneOf": [
+          {
+            "tag": {
+              "$ref": "#/definitions/code"
+            }
+          },
+          {
+            "code": {
+              "$ref": "#/definitions/code"
+            }
+          }
+        ],
         "charStart": {
           "$ref": "#/definitions/position"
         },
